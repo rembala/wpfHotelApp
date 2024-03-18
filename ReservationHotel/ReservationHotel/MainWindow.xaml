@@ -5,9 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReservationHotel" 
         xmlns:views="clr-namespace:ReservationHotel.Views"
+        xmlns:vms="clr-namespace:ReservationHotel.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Margin="20 10">
-        <views:MakeReservationView DataContext="{Binding CurrentViewModel}"/>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:MakeReservationViewModel}">
+                <views:MakeReservationView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:ReservationListingViewModel}">
+                <views:ListReservationView/>
+            </DataTemplate>
+        </Grid.Resources>
+        <!--<views:ListReservationView DataContext="{Binding CurrentViewModel}"/>-->
+
+        <ContentControl Content="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>

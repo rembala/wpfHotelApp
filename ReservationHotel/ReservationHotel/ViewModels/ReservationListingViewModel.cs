@@ -1,4 +1,6 @@
 ﻿using ReservationHotel.Commands;
+using ReservationHotel.Models;
+using ReservationHotel.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -6,22 +8,30 @@ namespace ReservationHotel.ViewModels
 {
     public sealed class ReservationListingViewModel : ViewModelBase
     {
-        private readonly ObservableCollection<ReservationViewModel> _reservations;
+        private readonly ObservableCollection<ReservationViewModel> _reservations = new ObservableCollection<ReservationViewModel>();
+        private readonly Hotel _hotel;
 
-        public IEnumerable<ReservationViewModel> Reservations { get; set; }
+        public ObservableCollection<ReservationViewModel> Reservations { get => _reservations; }
         
         public ICommand MakeReservationCommand {get; }
 
-        public ReservationListingViewModel()
+        public ReservationListingViewModel(Hotel hotel, NavigationService makeReservationService)
         {
-            _reservations =
-            [
-                new ReservationViewModel(new Models.Reservation(new Models.RoomID(1, 2), "SingletonSean", DateTime.Now, DateTime.Now + TimeSpan.FromDays(1))),
-                new ReservationViewModel(new Models.Reservation(new Models.RoomID(3, 2), "Joe", DateTime.Now, DateTime.Now + TimeSpan.FromDays(1))),
-                new ReservationViewModel(new Models.Reservation(new Models.RoomID(2, 4), "Mary", DateTime.Now, DateTime.Now + TimeSpan.FromDays(1))),
-            ];
+            MakeReservationCommand = new NavigateCommand(makeReservationService);
 
-            MakeReservationCommand = new NavigateCommand();
+            _hotel = hotel;
+            UpdateReservations();
+        }
+
+        private void UpdateReservations()
+        {
+            _reservations.Clear();
+
+            foreach (var item in _hotel.GetReservations())
+            {
+                var reser = new ReservationViewModel(item);
+                _reservations.Add(reser);
+            }
         }
     }
 }

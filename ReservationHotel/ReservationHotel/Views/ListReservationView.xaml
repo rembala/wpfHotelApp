@@ -17,13 +17,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Style="{StaticResource Header}" Text="View Reservation">
+            </TextBlock>
+
+            <Button Grid.Column="1" Margin="10 0 0 0" Content="Make Reservation" Command="{Binding MakeReservationCommand}"/>
+
         </Grid>
-
-        <TextBlock Grid.Column="0" Style="{StaticResource Header}" Text="View Reservation">
-        </TextBlock>
-
-        <Button Grid.Column="1" Margin="10 0 0 0" Content="Make Reservation"/>
-
         <ListView Grid.Row="1" Margin="0 25 0 0" ItemsSource="{Binding Reservations}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -43,7 +43,7 @@
                     <GridViewColumn Header="User name">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Username}" Padding="0 0 20 0 "/>
+                                <TextBlock Text="{Binding UserName}" Padding="0 0 20 0 "/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -51,7 +51,7 @@
                     <GridViewColumn Header="Start date">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding StartDate}"/>
+                                <TextBlock Text="{Binding StartTime}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -59,7 +59,7 @@
                     <GridViewColumn Header="End date">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding EndDate}"/>
+                                <TextBlock Text="{Binding EndTime}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

@@ -1,5 +1,7 @@
 ﻿using ReservationHotel.Models;
+using ReservationHotel.Services;
 using ReservationHotel.ViewModels;
+using System.Windows;
 
 namespace ReservationHotel.Commands
 {
@@ -7,11 +9,13 @@ namespace ReservationHotel.Commands
     {
         private readonly MakeReservationViewModel _makeReservationViewModel;
         private readonly Hotel _hotel;
+        private readonly NavigationService _reservationNavigateionService;
 
-        public MakeReservationCommand(MakeReservationViewModel makeReservationViewModel, Hotel hotel)
+        public MakeReservationCommand(MakeReservationViewModel makeReservationViewModel, Hotel hotel, NavigationService reservationNavigateionService)
         {
             _makeReservationViewModel = makeReservationViewModel;
             _hotel = hotel;
+            _reservationNavigateionService = reservationNavigateionService;
             _makeReservationViewModel.PropertyChanged += _makeReservationViewModel_PropertyChanged;
         }
 
@@ -29,6 +33,10 @@ namespace ReservationHotel.Commands
                 _makeReservationViewModel.UserName, _makeReservationViewModel.StartDate, _makeReservationViewModel.EndDate);
 
             _hotel.MakeReservation(reservation);
+
+            MessageBox.Show("Reservation succeded!");
+
+            _reservationNavigateionService.Navigate();
         }
 
         public override bool CanExecute(object? parameter)

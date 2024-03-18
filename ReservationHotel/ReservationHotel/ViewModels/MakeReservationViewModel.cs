@@ -1,5 +1,7 @@
 ﻿using ReservationHotel.Commands;
 using ReservationHotel.Models;
+using ReservationHotel.Services;
+using ReservationHotel.Stores;
 using System.Windows.Input;
 
 namespace ReservationHotel.ViewModels
@@ -83,9 +85,10 @@ namespace ReservationHotel.ViewModels
         public ICommand SubmitCommand {get; }
         public ICommand CancelCommand { get; }
 
-        public MakeReservationViewModel(Hotel hotel)
+        public MakeReservationViewModel(Hotel hotel, NavigationService navigationService)
         {
-            SubmitCommand = new MakeReservationCommand(this, hotel);
+            SubmitCommand = new MakeReservationCommand(this, hotel, navigationService);
+            CancelCommand = new NavigateCommand(navigationService);
         }
     }
 }
